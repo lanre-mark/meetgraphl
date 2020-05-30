@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import ClockLayout from "./clocklayout";
-import Styles from "../utility/styling";
-import { cssTransform } from "../utility/helpers";
-import { darkPreset } from "../theming/presets";
-import useClockTicker from "./clockticker";
+import ClockLayout from './clocklayout';
+import Styles from '../utility/styling';
+import { cssTransform } from '../utility/helpers';
+import { darkPreset } from '../theming/presets';
+import useClockTicker from './clockticker';
 
 export const DisplayClock = ({ timezone, width, theme, showSmallTicks }) => {
   const date = useClockTicker(timezone);

@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function animateClockTicks({ smallTick, largeTick }, showSmallTicks) {
   const clockTicks = [];
@@ -34,9 +34,9 @@ export default function ClockLayout({
   });
   return (
     <div style={styles.base}>
-      <div data-testid="seconds" style={secondHandStyle}></div>
-      <div data-testid="minutes" style={minuteHandStyle}></div>
-      <div data-testid="hour" style={hourHandStyle}></div>
+      <div data-testid='seconds' style={secondHandStyle}></div>
+      <div data-testid='minutes' style={minuteHandStyle}></div>
+      <div data-testid='hour' style={hourHandStyle}></div>
       <div style={styles.center}></div>
       {animateClockTicks(styles, showSmallTicks)}
     </div>

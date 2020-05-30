@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import moment from "moment-timezone";
+import { useState, useEffect } from 'react';
+import moment from 'moment-timezone';
 
 const useClockTicker = (timezone) => {
   const [date, setDate] = useState(moment());

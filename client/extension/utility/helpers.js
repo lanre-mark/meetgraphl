@@ -3,7 +3,7 @@ export function cssTransform(styles, props) {
     const style = styles[rootKey];
     transformedStyles[rootKey] = Object.keys(style).reduce(
       (transaformedStyle, key) => {
-        if (typeof style[key] === "function") {
+        if (typeof style[key] === 'function') {
           transaformedStyle[key] = style[key](props);
         } else {
           transaformedStyle[key] = style[key];

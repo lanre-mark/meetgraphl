@@ -5,31 +5,31 @@ const validateSetting = (value, defaultValue) => {
 
 const Base = {
   background: (s) => s.theme.background,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  borderRadius: "100%",
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  borderRadius: '100%',
   border: (s) => `${s.width / 20}px solid ${s.theme.border}`,
   height: (s) => s.width,
-  position: "relative",
+  position: 'relative',
   width: (s) => s.width,
 };
 
 const Center = {
   background: (s) => s.theme.center,
-  borderRadius: "100%",
-  height: "12px",
-  left: "50%",
-  position: "absolute",
-  top: "50%",
-  transform: "translateX(-50%) translateY(-50%)",
-  width: "12px",
+  borderRadius: '100%',
+  height: '12px',
+  left: '50%',
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateX(-50%) translateY(-50%)',
+  width: '12px',
 };
 
 const Hand = {
-  left: "50%",
-  position: "absolute",
-  top: "50%",
-  transformOrigin: "50% 100%",
+  left: '50%',
+  position: 'absolute',
+  top: '50%',
+  transformOrigin: '50% 100%',
 };
 
 const SecondHand = Object.assign({}, Hand, {
@@ -53,8 +53,8 @@ const HourHand = Object.assign({}, Hand, {
 const SmallTick = {
   background: (s) => s.theme.tick,
   height: 6,
-  left: "50%",
-  position: "absolute",
+  left: '50%',
+  position: 'absolute',
   top: 6,
   transformOrigin: (s) => `0 ${Math.ceil(s.width / 2)}px`,
   width: (s) => validateSetting(s.theme.smallTickWidth, 2),
@@ -64,7 +64,7 @@ const LargeTick = {
   background: (s) => s.theme.tick,
   height: 10,
   left: (s) => Math.ceil(s.width / 2) + 2,
-  position: "absolute",
+  position: 'absolute',
   top: 10,
   transformOrigin: (s) => `0 ${Math.ceil(s.width / 2)}px`,
   width: (s) => validateSetting(s.theme.largeTickWidth, 4),
