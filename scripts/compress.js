@@ -1,19 +1,19 @@
-const fs = require('fs');
-const ChromeExtension = require('crx');
+const fs = require("fs");
+const ChromeExtension = require("crx");
 /* eslint import/no-unresolved: 0 */
-const argv = require('minimist')(process.argv.slice(2));
-const name = require('../src/manifest.json').name;
+const argv = require("minimist")(process.argv.slice(2));
+const name = require("../client/manifest.json").name;
 
-
-const keyPath = argv.key || 'key.pem';
+const keyPath = argv.key || "key.pem";
 const existsKey = fs.existsSync(keyPath);
 const crx = new ChromeExtension({
-  appId: argv['app-id'],
+  appId: argv["app-id"],
   codebase: argv.codebase,
-  privateKey: existsKey ? fs.readFileSync(keyPath) : null
+  privateKey: existsKey ? fs.readFileSync(keyPath) : null,
 });
 
-crx.load('extension')
+crx
+  .load("extension")
   .then(() => crx.loadContents())
   .then((archiveBuffer) => {
     fs.writeFile(`${name}.zip`, archiveBuffer);
@@ -22,7 +22,7 @@ crx.load('extension')
     crx.pack(archiveBuffer).then((crxBuffer) => {
       const updateXML = crx.generateUpdateXML();
 
-      fs.writeFile('update.xml', updateXML);
+      fs.writeFile("update.xml", updateXML);
       fs.writeFile(`${name}.crx`, crxBuffer);
     });
   });

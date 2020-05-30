@@ -1,8 +1,9 @@
 {
   "version": "0.1.0",
   "manifest_version": 2,
-  "name": "Meet Graphl",
-  "description": "Google Meet Graphl for Firefox and Chrome extensions.",
+  "name": "Meet Grafík",
+  "author": "Lanre Makinde",
+  "description": "Firefox and Chrome extensions introspect google meet participants' information.",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

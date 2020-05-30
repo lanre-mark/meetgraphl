@@ -1,6 +1,6 @@
 # Thank You
 
-We are grateful that you considered contributing to React Extension Boilerplate. Please follow the below guidelines for contribution.
+We are grateful that you considered contributing to Google Meet Graphík. Please follow the below guidelines for contribution.
 
 Follow the golden rule
 
@@ -28,7 +28,7 @@ https://wiredcraft.com/blog/how-we-write-our-github-issues
 
 ## Sending a PR
 
-While sending a PR, always remember not to send one from your master branch; it'll lead to commit issues and mismatch. 
+While sending a PR, always remember not to send one from your master branch; it'll lead to commit issues and mismatch.
 
 It is highly recommended to follow the below guidelines while writing commits and sending PRs:
 
@@ -37,4 +37,4 @@ It is highly recommended to follow the below guidelines while writing commits an
 
 ## Communication
 
-Please join the [gitter channel](https://gitter.im/react-boilerplate-extension/community) for communication regarding the project. No personal communication will be entertained :)
+Please join the [slack workspace](https://join.slack.com/t/lanre-mark/shared_invite/zt-eju0ofqf-5jKE17eT1teZ8WlC0zHF_g) for communication regarding the project.
