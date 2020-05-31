@@ -12,6 +12,7 @@ const Base = {
   height: (s) => s.width,
   position: 'relative',
   width: (s) => s.width,
+  margin: '10px',
 };
 
 const Center = {
@@ -23,6 +24,7 @@ const Center = {
   top: '50%',
   transform: 'translateX(-50%) translateY(-50%)',
   width: '12px',
+  margin: '5px',
 };
 
 const Hand = {

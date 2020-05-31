@@ -34,9 +34,9 @@ export default function ClockLayout({
   });
   return (
     <div style={styles.base}>
-      <div data-testid='seconds' style={secondHandStyle}></div>
-      <div data-testid='minutes' style={minuteHandStyle}></div>
-      <div data-testid='hour' style={hourHandStyle}></div>
+      <div data-time-id='seconds' style={secondHandStyle}></div>
+      <div data-time-id='minutes' style={minuteHandStyle}></div>
+      <div data-time-id='hour' style={hourHandStyle}></div>
       <div style={styles.center}></div>
       {animateClockTicks(styles, showSmallTicks)}
     </div>
