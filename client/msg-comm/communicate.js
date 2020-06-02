@@ -1,7 +1,7 @@
 export default (payload) => {
   console.log('Sending chromeMessage: ', payload);
   return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(payload, function(response) {
+    browser.runtime.sendMessage(payload, function(response) {
       //eslint-disable-line no-undef
       if (response) {
         resolve(response);
