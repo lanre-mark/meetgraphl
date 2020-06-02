@@ -1,17 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
-console.log('Background.js file loaded');
-
 import io from 'socket.io-client';
 
 const socket = io('https://meetgrapheek.glitch.me');
-
-/* const defaultUninstallURL = () => {
-  return process.env.NODE_ENV === 'production'
-    ? 'https://wwww.github.com/kryptokinght'
-    : '';
-}; */
 
 socket.on('connect', async () => {
   console.log('Connected to the Socket Now');
@@ -52,9 +44,4 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // default:
   ) {
   }
-});
-
-browser.webNavigation.onCompleted.addListener(function(navigationEvent) {
-  let tabId = navigationEvent.tabId;
-  console.log('navigationEvent :: ', tabId);
 });

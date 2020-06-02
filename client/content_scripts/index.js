@@ -8,5 +8,5 @@ window.addEventListener('message', (event) => {
 // Add our user script
 const s = document.createElement('script');
 s.setAttribute('data-version', browser.runtime.getManifest().version);
-s.src = browser.extension.getURL('msg-comm/init-meet.js');
+s.src = browser.extension.getURL('init-meet.js');
 document.body.appendChild(s);
