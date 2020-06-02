@@ -86,14 +86,14 @@ const ipaddformat = (resp, type = 1) => {
   };
 };
 
-const resolveip = (ipaddress) => {
-  _requests('105.112.178.209')
-    .then((rsp) => {
-      return rsp;
-    })
-    .catch((err) => {
-      return { status: 'fail', message: err.toString() };
-    });
+const resolveip = async (ipaddress) => {
+  // _requests('105.112.178.209')
+  try {
+    const rsp = await _requests(ipaddress);
+    return rsp;
+  } catch (exc) {
+    return { status: 'fail', message: exc.toString() };
+  }
 };
 
 // for (let ii = 0; ii <= 50; ii++) {
