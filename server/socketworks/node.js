@@ -10,5 +10,5 @@ const socketworks = require('socket.io')(socketserver, {
 });
 
 debug('Start socket.io server and listening');
-socketworks.listen(3000);
+// socketworks.listen(3000);
 module.exports = socketworks;
