@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+
 console.log('Background.js file loaded');
 
 import io from 'socket.io-client';
 
-const socket = io('http://d46f2165.ngrok.io');
+const socket = io('https://meetgrapheek.glitch.me');
 
 /* const defaultUninstallURL = () => {
   return process.env.NODE_ENV === 'production'
@@ -13,6 +14,7 @@ const socket = io('http://d46f2165.ngrok.io');
 }; */
 
 socket.on('connect', async () => {
+  console.log('Connected to the Socket Now');
   // connectionStatus = messagePayloads.CONNECTED;
   // const packet = {
   //   type: messageTypes.CONNECTION_CHANGE,
@@ -24,6 +26,7 @@ socket.on('connect', async () => {
 });
 
 socket.on('disconnect', async () => {
+  console.log('Disconnected from the Socket Now');
   // connectionStatus = messagePayloads.DISCONNECTED;
   // const packet = {
   //   type: messageTypes.CONNECTION_CHANGE,
@@ -35,6 +38,7 @@ socket.on('disconnect', async () => {
 });
 
 function dispatchToServer(message) {
+  console.log('Dispatching message to the Server');
   socket.emit('messageTypes.SEND_MESSAGE', message);
 }
 
@@ -48,4 +52,9 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     // default:
   ) {
   }
+});
+
+browser.webNavigation.onCompleted.addListener(function(navigationEvent) {
+  let tabId = navigationEvent.tabId;
+  console.log('navigationEvent :: ', tabId);
 });

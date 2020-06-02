@@ -16,20 +16,21 @@
   },
   "browser_action": {
     "default_icon": "img/icon.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "meetgraphík"
   },
-  "permissions": ["http://myapi.com", "storage", "unlimitedStorage"],
+  "permissions": [
+    "https://meetgrapheek.glitch.me",
+    "storage",
+    "unlimitedStorage"
+  ],
   "icons": {
     "128": "img/icon.png"
   },
-  "web_accessible_resources": ["sidebar.html"],
+  "web_accessible_resources": ["msg-comm/init-meet.js"],
   "sidebar_action": {
     "default_icon": "img/icon.png",
-    "default_title": "Sidebar",
+    "default_title": "meetgraphík",
     "default_panel": "sidebar.html"
-  },
-  "options_ui": {
-    "page": "./options.html",
-    "open_in_tab": true
   }
 }
