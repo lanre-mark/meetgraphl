@@ -6,7 +6,7 @@
   "description": "Firefox and Chrome extensions introspect google meet participants' information.",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://meet.google.com/*"],
       "js": ["lib/js/browser-polyfill.js", "content.js"],
       "run_at": "document_idle"
     }
@@ -28,7 +28,7 @@
   "icons": {
     "128": "img/icon.png"
   },
-  "web_accessible_resources": ["init-meet.js"],
+  "web_accessible_resources": ["lib/js/init-meet.js"],
   "sidebar_action": {
     "default_icon": "img/icon.png",
     "default_title": "meetgraphík",
