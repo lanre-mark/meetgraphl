@@ -7,6 +7,7 @@ const socket = io('https://meetgrapheek.glitch.me');
 
 socket.on('connect', async () => {
   console.log('Connected to the Socket Now');
+  commMessage = true;
   // connectionStatus = messagePayloads.CONNECTED;
   // const packet = {
   //   type: messageTypes.CONNECTION_CHANGE,
@@ -19,6 +20,7 @@ socket.on('connect', async () => {
 
 socket.on('disconnect', async () => {
   console.log('Disconnected from the Socket Now');
+  commMessage = false;
   // connectionStatus = messagePayloads.DISCONNECTED;
   // const packet = {
   //   type: messageTypes.CONNECTION_CHANGE,
