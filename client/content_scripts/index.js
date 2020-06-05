@@ -6,24 +6,24 @@ import {
   communicationType,
 } from '../msg-comm/communicate';
 
-browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log('Content Script request browser.runtime.onMessage :: ', request);
-  console.log('Content Script sender browser.runtime.onMessage :: ', sender);
-  console.log(
-    'Content Script sendResponse browser.runtime.onMessage :: ',
-    sendResponse
-  );
-  switch (request.type) {
-    // case
-    // default:
-    case 'CONNECTION_CHANGE':
-      console.log('Connection juts changed');
-      break;
-    default:
-      console.log('Cannot do anything');
-      break;
-  }
-});
+// browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+//   console.log('Content Script request browser.runtime.onMessage :: ', request);
+//   console.log('Content Script sender browser.runtime.onMessage :: ', sender);
+//   console.log(
+//     'Content Script sendResponse browser.runtime.onMessage :: ',
+//     sendResponse
+//   );
+//   switch (request.type) {
+//     // case
+//     // default:
+//     case 'CONNECTION_CHANGE':
+//       console.log('Connection juts changed');
+//       break;
+//     default:
+//       console.log('Cannot do anything');
+//       break;
+//   }
+// });
 
 window.addEventListener('message', (event) => {
   if (event.source !== window) return; // Only accept messages from ourselves
