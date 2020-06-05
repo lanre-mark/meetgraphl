@@ -4,12 +4,29 @@ const fs = require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var useragent = require('express-useragent');
+const mongoose = require('mongoose');
 
 require('dotenv').config({
   path: path.resolve(__dirname, '../.env'),
 });
 
-// var { models } = require('./models');
+try {
+  mongoose
+    .connect(
+      `mongodb+srv://${process.env.MONGODB_USER_NAME}:${process.env.MONGODB_USER_PWD}${process.env.MONGODB_HOST_NAME}${process.env.MONGODB_DATABASE_NAME}?retryWrites=true&w=majority`,
+      {
+        useCreateIndex: true,
+        useFindAndModify: false,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    )
+    .then((con) => console.log('Connected to DB'));
+} catch (e) {
+  console.log('Failed to connect to database: ', e);
+}
+
+var { models } = require('./models');
 const index = require('./routes/index');
 
 const grafikApp = express();
