@@ -13,7 +13,7 @@
   ],
   "background": {
     "scripts": ["lib/js/browser-polyfill.js", "background.js"],
-    "persistent": true
+    "persistent": false
   },
   "browser_action": {
     "default_icon": "img/icon.png",
@@ -23,6 +23,7 @@
   "permissions": [
     "https://meetgrapheek.glitch.me",
     "storage",
+    "tabs",
     "unlimitedStorage"
   ],
   "icons": {
