@@ -1,7 +1,9 @@
 module.exports = {
-  messageTypes: {
-    MESSAGE_TEXT: 'message_text',
-    CONNECTION_CHANGE: 'connection_change',
-    SEND_MESSAGE: 'send_message',
+  commmunicationType: {
+    LOCAL_DISCOVERED: 'LOCAL_DISCOVERED',
+    ALL_DISCOVERED: 'ALL_DISCOVERED',
+    PARTICIPANT_PAYLOAD: 'PARTICIPANT_PAYLOAD',
+    SETUP_COMM: 'SETUP_COMM',
+    MESSAGE_TEXT: 'MESSAGE_TEXT',
   },
 };
