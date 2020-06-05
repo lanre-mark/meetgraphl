@@ -1,22 +1,36 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+import {
+  lclMeetDict,
+  dispatchToBackground,
+  communicationType,
+} from '../msg-comm/communicate';
 
-if (typeof commMessage === 'undefined') var commMessage = false;
-if (typeof lclMeetDict === 'undefined') var lclMeetDict = {};
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log('Content Script request browser.runtime.onMessage :: ', request);
+  console.log('Content Script sender browser.runtime.onMessage :: ', sender);
+  console.log(
+    'Content Script sendResponse browser.runtime.onMessage :: ',
+    sendResponse
+  );
+  switch (request.type) {
+    // case
+    // default:
+    case 'CONNECTION_CHANGE':
+      console.log('Connection juts changed');
+      break;
+    default:
+      console.log('Cannot do anything');
+      break;
+  }
+});
 
 window.addEventListener('message', (event) => {
-  // console.log('addEventListener event.source :: ', event.source);
-  // console.log('addEventListener window :: ', window);
-  // if (event.source !== window) return; // Only accept messages from ourselves
-  // console.log('addEventListener event :: ', event);
-  // console.log('addEventListener window :: ', window);
-  // const thisObject = event.currentTarget.document.scripts;
-  // if (thisObject) {
-  //   console.log(thisObject);
-  // } else {
-  //   console.log('No Scripts here');
-  // }
-  if (event && event.currentTarget && event.currentTarget.document) {
+  if (event.source !== window) return; // Only accept messages from ourselves
+  if (event && event.data && typeof event.data === 'object') {
+    if (event.data.sender !== 'meetgraphík') return;
+    dispatchToBackground(event.data.messageType, event.data.payload);
+  } else if (event && event.currentTarget && event.currentTarget.document) {
     // can start this meet
     const thisObject = event.currentTarget.document;
     if (thisObject.images) {
@@ -59,6 +73,7 @@ window.addEventListener('message', (event) => {
                 e
               );
             }
+            dispatchToBackground(communicationType.SETUP_COMM, lclMeetDict);
           }
         }
       }
