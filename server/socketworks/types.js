@@ -1,6 +1,5 @@
 module.exports = {
-  commmunicationType: {
-    LOCAL_DISCOVERED: 'LOCAL_DISCOVERED',
+  communicationType: {
     ALL_DISCOVERED: 'ALL_DISCOVERED',
     PARTICIPANT_PAYLOAD: 'PARTICIPANT_PAYLOAD',
     SETUP_COMM: 'SETUP_COMM',
