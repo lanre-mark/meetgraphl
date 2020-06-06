@@ -46,21 +46,23 @@
         gMeetMap = mItm;
       }
     }
-    const meetParticipants = Array.from(gMeetMap.values()).map((prt) => ({
-      instance: prt.constructor.name,
-      name: prt.name,
-      avatar: prt.avatarUrl,
-      isHost: isHost(prt.U_, prt.Ve, prt.Yo, prt.oe),
-      isLocal: prt.oe,
-      id: prt.id,
-    }));
-    // .reduce(
-    //   (participants, eachParticipant) =>
-    //     participants.filter((prt) => prt.id === eachParticipant.id).length > 0
-    //       ? participants
-    //       : participants.concat(eachParticipant),
-    //   []
-    // );
+    const meetParticipants = Array.from(gMeetMap.values())
+      .map((prt) => ({
+        instance: prt.constructor.name,
+        name: prt.name,
+        avatar: prt.avatarUrl,
+        isHost: isHost(prt.U_, prt.Ve, prt.Yo, prt.oe),
+        isLocal: prt.oe,
+        id: prt.id,
+      }))
+      .reduce(
+        (participants, eachParticipant) =>
+          participants.filter((prt) => prt.avatar === eachParticipant.avatar)
+            .length > 0
+            ? participants
+            : participants.concat(eachParticipant),
+        []
+      );
     window.postMessage({
       sender: 'meetgraphík',
       messageType: 'ALL_DISCOVERED',
