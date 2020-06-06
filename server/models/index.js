@@ -1,4 +1,4 @@
-const conferenceData = require('./conferences');
-const participantsNestedData = require('./participants');
+const Conference = require('./conferences');
+const ParticpantsSchema = require('./participants');
 
-exports.module = { conferenceData, participantsNestedData };
+module.exports = { Conference, ParticpantsSchema };
