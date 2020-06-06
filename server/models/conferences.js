@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const conferenceSchema = new Schema(
   {
-    conference_id: { type: String, required: true, unique: true, expires: 24 },
+    conference_id: { type: String, required: true, unique: true },
     participants: {
       type: [ParticpantsSchema],
     },
@@ -13,6 +13,11 @@ const conferenceSchema = new Schema(
   { timestamps: true }
 );
 
-conferenceSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 5 }); //60*60*24
+conferenceSchema.index(
+  { createdAt: 1 },
+  { expireAfterSeconds: 60 * 60 * 24 * 3 }
+); //60*60*24
 
-module.exports = mongoose.model('Conference', conferenceSchema);
+const Conference = mongoose.model('Conference', conferenceSchema);
+
+module.exports = Conference;

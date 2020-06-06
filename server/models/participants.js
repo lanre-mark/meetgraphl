@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ParticpantsSchema = new mongoose.Schema({
-  id: {
+  clientid: {
     type: String,
   },
   participant_id: {
@@ -19,9 +19,19 @@ const ParticpantsSchema = new mongoose.Schema({
     default: '0.0.0.0',
   },
   geo: {
-    type: [mongoose.Schema.Types.Decimal128],
+    type: mongoose.Schema.Types.Mixed,
     required: true,
-    default: [],
+    default: {},
+  },
+  device: {
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    default: {},
+  },
+  events: {
+    type: [mongoose.Schema.Types.Mixed],
+    required: true,
+    default: [{ date: Date.now, event: {} }],
   },
 });
 
