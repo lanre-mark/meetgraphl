@@ -26,7 +26,6 @@ try {
   console.log('Failed to connect to database: ', e);
 }
 
-var { models } = require('./models');
 const index = require('./routes/index');
 
 const grafikApp = express();

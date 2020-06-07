@@ -1,7 +1,12 @@
+const requestIp = require('request-ip');
+const useragent = require('express-useragent');
 const { communicationType } = require('./types');
+const { resolveip } = require('../utility');
 const debug = require('debug')(
   `${process.env.APP_NAME}:applicationInteractions`
 );
+const models = require('../models');
+const controller = require('../controllers')(models);
 
 module.exports = (socketworks) => {
   socketworks.on('connection', (client) => {
