@@ -1,5 +1,4 @@
 const requestIp = require('request-ip');
-const useragent = require('express-useragent');
 const { communicationType } = require('./types');
 const { resolveip } = require('../utility');
 const debug = require('debug')(

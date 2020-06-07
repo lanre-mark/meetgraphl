@@ -3,7 +3,6 @@ var path = require('path');
 const fs = require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var useragent = require('express-useragent');
 const mongoose = require('mongoose');
 
 require('dotenv').config({
@@ -34,7 +33,6 @@ grafikApp.use(bodyParser.urlencoded({ extended: true }));
 grafikApp.use(bodyParser.json());
 
 grafikApp.use(logger('dev'));
-grafikApp.use(useragent.express());
 
 grafikApp.use(express.static('public'));
 
