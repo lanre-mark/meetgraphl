@@ -164,12 +164,12 @@ const deviceinfo2 = {
 
 module.exports = ({ Conference }) => {
   return {
-    addConferenceInfo: async (
+    addConferenceInfo: async function(
       participantsObject,
       ipaddress = ipadd1,
       geoCoords = geo1,
       deviceInfo = deviceinfo1
-    ) => {
+    ) {
       const operationData = parseParticipantToServerObject(participantsObject);
       const conferenceRoot = await Conference.find({
         conference_id: operationData.operate['conf-meet-id'],
@@ -422,7 +422,7 @@ module.exports = ({ Conference }) => {
         await updateConferenceData(participants);
       }
       // console.log('Completed :: ', participants);
-      const returnData = await generateParticipantsResponse(
+      const returnData = await this.generateParticipantsResponse(
         Conference,
         participants,
         operationData.operate['conf-meet-id'],
@@ -432,59 +432,65 @@ module.exports = ({ Conference }) => {
       );
       return returnData;
     },
-    infuseLocalDetails: async () => {},
+    generateParticipantsResponse: async function(
+      modelObj,
+      participants,
+      conference_id,
+      geoLat,
+      geoLon,
+      controlData
+    ) {
+      //
+      let fetchParticipantsinDb = async () => {
+        try {
+          for (let ii = 0; ii < participants.length; ii++) {
+            const participantInDb = await modelObj.find(
+              {
+                conference_id,
+                // 'participants.avatar': participants[ii].avatar,
+              },
+              {
+                participants: {
+                  $elemMatch: { avatar: participants[ii].avatar },
+                },
+              }
+            );
+            const {
+              network,
+              events,
+              avatar,
+              name,
+              geo,
+              device,
+            } = participantInDb[0].participants[0];
+            controlData.participants[ii].distance =
+              geo.latitide && geo.longitude
+                ? getDistanceFromLatLonInKm(
+                    geoLat,
+                    geoLon,
+                    geo.latitide,
+                    geo.longitude
+                  )
+                : null;
+
+            controlData.participants[ii].timezone = geo.timezone
+              ? geo.timezone
+              : null;
+            // console.log({ network, events, avatar, name, geo, device });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      await fetchParticipantsinDb(participants);
+      return controlData;
+    },
+    infuseLocalDetails: async function() {},
   };
 };
 
 /* closed function implementing *****PLSRD******
  */
-
-async function generateParticipantsResponse(
-  modelObj,
-  participants,
-  conference_id,
-  geoLat,
-  geoLon,
-  controlData
-) {
-  //
-  let fetchParticipantsinDb = async () => {
-    try {
-      for (let ii = 0; ii < participants.length; ii++) {
-        const participantInDb = await modelObj.find(
-          {
-            conference_id,
-            // 'participants.avatar': participants[ii].avatar,
-          },
-          { participants: { $elemMatch: { avatar: participants[ii].avatar } } }
-        );
-        const {
-          network,
-          events,
-          avatar,
-          name,
-          geo,
-          device,
-        } = participantInDb[0].participants[0];
-        controlData.participants[ii].distance =
-          geo.latitide && geo.longitude
-            ? getDistanceFromLatLonInKm(
-                geoLat,
-                geoLon,
-                geo.latitide,
-                geo.longitude
-              )
-            : null;
-
-        // console.log({ network, events, avatar, name, geo, device });
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  await fetchParticipantsinDb(participants);
-  return controlData;
-}
 
 function parseParticipantToServerObject(prt) {
   return prt
