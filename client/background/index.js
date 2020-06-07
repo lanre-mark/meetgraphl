@@ -36,7 +36,9 @@ function dispatchToServer(message) {
 }
 
 function dispatchParticipants(message) {
+  // TODO : Add a diffing algorithm here
   socket.emit(message.messageType, message.payload);
+  // console.log('Current partcipants to the backend :: ', message.payload);
 }
 
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {

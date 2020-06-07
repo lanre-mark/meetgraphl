@@ -29,7 +29,13 @@ window.addEventListener('message', (event) => {
   if (event.source !== window) return; // Only accept messages from ourselves
   if (event && event.data && typeof event.data === 'object') {
     if (event.data.sender !== 'meetgraphík') return;
-    dispatchToBackground(event.data.messageType, event.data.payload);
+    // TODO : Consider a diffing algorithm here
+    try {
+      dispatchToBackground(event.data.messageType, event.data.payload);
+      addtodict('participants', event.data.payload);
+    } catch (err) {
+      console.error(err);
+    }
   } else if (event && event.currentTarget && event.currentTarget.document) {
     // can start this meet
     const thisObject = event.currentTarget.document;
@@ -73,7 +79,11 @@ window.addEventListener('message', (event) => {
                 e
               );
             }
-            dispatchToBackground(communicationType.SETUP_COMM, lclMeetDict);
+            try {
+              dispatchToBackground(communicationType.SETUP_COMM, lclMeetDict);
+            } catch (err) {
+              console.error(err);
+            }
           }
         }
       }

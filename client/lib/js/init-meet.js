@@ -68,6 +68,7 @@
       messageType: 'ALL_DISCOVERED',
       payload: meetParticipants,
     });
+    // console.log('Current partcipants :: ', meetParticipants);
   }
 
   function MeetingsUIProxyHandler() {

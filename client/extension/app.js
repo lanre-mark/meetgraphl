@@ -3,20 +3,20 @@ import DisplayClock, { Themes } from './components/index';
 
 const WIDTH = 125;
 
-const customTheme = {
-  background: 'transparent',
-  border: 'transparent',
-  center: 'transparent',
-  seconds: '#000',
-  minutes: '#000',
-  hour: '#000',
-  tick: '#000',
-  smallTickWidth: 1,
-  largeTickWidth: 1,
-  secondHandWidth: 1,
-  minuteHandWidth: 1,
-  hourHandWidth: 1,
-};
+// const customTheme = {
+//   background: 'transparent',
+//   border: 'transparent',
+//   center: 'transparent',
+//   seconds: '#000',
+//   minutes: '#000',
+//   hour: '#000',
+//   tick: '#000',
+//   smallTickWidth: 1,
+//   largeTickWidth: 1,
+//   secondHandWidth: 1,
+//   minuteHandWidth: 1,
+//   hourHandWidth: 1,
+// };
 
 const App = () => {
   return (
@@ -25,24 +25,27 @@ const App = () => {
         <DisplayClock
           width={WIDTH}
           theme={Themes.darkPreset}
-          timezone={{ label: 'London', value: 'Europe/London' }}
+          timezone={{ label: 'California', value: 'America/Los_Angeles' }}
         />
       </span>
       <span>
         <DisplayClock
           width={WIDTH}
           theme={Themes.aquaPreset}
-          timezone={{ label: 'London', value: 'Europe/London' }}
+          timezone={{
+            label: 'Eastern Time - Melbourne',
+            value: 'Australia/Melbourne',
+          }}
         />
       </span>
       <span>
         <DisplayClock
           width={WIDTH}
           theme={Themes.sherbertPreset}
-          timezone={{ label: 'London', value: 'Europe/London' }}
+          timezone={{ label: 'Lagos', value: 'Africa/Lagos' }}
         />
       </span>
-      <span>
+      {/* <span>
         <DisplayClock
           width={WIDTH}
           theme={Themes.navyPreset}
@@ -62,7 +65,7 @@ const App = () => {
           width={WIDTH}
           theme={Themes.limePreset}
         ></DisplayClock>
-      </span>
+      </span> */}
     </div>
   );
 };
