@@ -23,16 +23,24 @@ const initiateBrowserCall = () => {
 const sendBrowserMessage = (payload) => {
   // return new Promise((resolve, reject) => {
   if (deliverMsg) {
-    browser.tabs.query({ active: true }).then(function(tabs) {
-      browser.tabs.sendMessage(tabs[0].id, { message: payload });
-      // resolve();
-    });
+    try {
+      browser.tabs.query({ active: true }).then(function(tabs) {
+        browser.tabs.sendMessage(tabs[0].id, { message: payload });
+        // resolve();
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
   // });
 };
 
 const dispatchToBackground = (messageType, payload) => {
-  browser.runtime.sendMessage({ messageType: messageType, payload: payload });
+  try {
+    browser.runtime.sendMessage({ messageType: messageType, payload: payload });
+  } catch (err) {
+    console.error(err);
+  }
   // .then((response) => {
   // console.log(`Here is the repsonse from background ${response}`);
   // });
