@@ -403,11 +403,42 @@ module.exports = ({ Conference }) => {
     },
     infuseLocalDetails: async function() {},
     parseDeviceInfo: function(dInfo) {
-      const dinf = [];
-      const details = [{ device: ['vendor', 'model'] }];
+      const details = [{ device: ['vendor', 'model', 'type'] }];
       details.push({ os: ['name', 'version'] });
       details.push({ browser: ['name', 'version'] });
       details.push({ engine: ['name', 'version'] });
+      return details.reduce(
+        (deviceinfo, det) => {
+          const struc = dInfo[Object.keys(det)[0]];
+          if (struc) {
+            if (det[Object.keys(det)[0]].some((k) => struc[k])) {
+              deviceinfo['devinfo'].push(
+                det[Object.keys(det)[0]]
+                  .map((k, ii) =>
+                    struc[k]
+                      ? ii === 0
+                        ? struc[k]
+                        : ii === 1
+                        ? `v${struc[k]}`
+                        : `(${struc[k].toTitleCase()})`
+                      : ''
+                  )
+                  .join(' ')
+              );
+              if (Object.keys(det)[0] === 'os') {
+                deviceinfo['devinfo'][deviceinfo['devinfo'].length - 1] +=
+                  dInfo.cpu && dInfo.cpu.architecture
+                    ? ' (' + dInfo.cpu.architecture.toLowerCase() + ')'
+                    : '';
+              }
+            }
+          }
+          return deviceinfo;
+        },
+        { devinfo: [] }
+      );
+      /* STATIC METHOD
+      const dinf = [];
       if (dInfo.device && dInfo.device.vendor) {
         dinf.push(
           `${dInfo.device.vendor.toUpperCase()} ${
@@ -441,6 +472,7 @@ module.exports = ({ Conference }) => {
         );
       }
       return { devinfo: dinf };
+      */
     },
   };
 };
