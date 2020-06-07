@@ -1,6 +1,6 @@
 const router = require('express').Router(),
-  useragent = require('express-useragent'),
   requestIp = require('request-ip'),
+  userparser = require('ua-parser-js'),
   { resolveip } = require('../utility');
 
 const models = require('../models');
@@ -159,7 +159,22 @@ router.get('/hey', async (req, res, next) => {
   // const ua = await useragent.parse(req.headers['user-agent']);
   // console.log(controller);
 
-  const ths = await controller.addConferenceInfo(meet4);
+  // const ths = await controller.addConferenceInfo(meet4);
+
+  const deviceinfo1 = userparser(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36'
+  );
+  const deviceinfo2 = userparser(
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2'
+  );
+  const deviceinfo3 = userparser(
+    'Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.11 (KHTML, like Gecko) Version/7.1.0.7 Safari/534.11'
+  );
+
+  console.log(controller.parseDeviceInfo(deviceinfo1));
+  console.log(controller.parseDeviceInfo(deviceinfo2));
+  console.log(controller.parseDeviceInfo(deviceinfo3));
+
   // console.log(ths);
   //   ,
   //   clientIp,
