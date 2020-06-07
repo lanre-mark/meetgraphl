@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
 const { getDistanceFromLatLonInKm } = require('../utility/geometry');
+const stringPrototypes = require('../utility/misc');
 
 // IP Address
 const ipadd1 = '105.112.55.239';
@@ -51,115 +51,31 @@ const geo3 = {
 };
 // Device Info
 const deviceinfo1 = {
-  isYaBrowser: false,
-  isAuthoritative: true,
-  isMobile: false,
-  isTablet: false,
-  isiPad: false,
-  isiPod: false,
-  isiPhone: false,
-  isAndroid: false,
-  isBlackberry: false,
-  isOpera: false,
-  isIE: false,
-  isEdge: false,
-  isIECompatibilityMode: false,
-  isSafari: false,
-  isFirefox: false,
-  isWebkit: false,
-  isChrome: true,
-  isKonqueror: false,
-  isOmniWeb: false,
-  isSeaMonkey: false,
-  isFlock: false,
-  isAmaya: false,
-  isPhantomJS: false,
-  isEpiphany: false,
-  isDesktop: true,
-  isWindows: false,
-  isLinux: false,
-  isLinux64: false,
-  isMac: true,
-  isChromeOS: false,
-  isBada: false,
-  isSamsung: false,
-  isRaspberry: false,
-  isBot: false,
-  isCurl: false,
-  isAndroidTablet: false,
-  isWinJs: false,
-  isKindleFire: false,
-  isSilk: false,
-  isCaptive: false,
-  isSmartTV: false,
-  isUC: false,
-  isFacebook: false,
-  isAlamoFire: false,
-  isElectron: false,
-  silkAccelerated: false,
-  browser: 'Chrome',
-  version: '83.0.4103.61',
-  os: 'OS X',
-  platform: 'Apple Mac',
-  geoIp: {},
-  source:
+  ua:
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+  browser: { name: 'Chrome', version: '83.0.4103.61', major: '83' },
+  engine: { name: 'Blink', version: '83.0.4103.61' },
+  os: { name: 'Mac OS', version: '10.15.4' },
+  device: { vendor: undefined, model: undefined, type: undefined },
+  cpu: { architecture: undefined },
 };
-
 const deviceinfo2 = {
-  isYaBrowser: false,
-  isAuthoritative: true,
-  isMobile: false,
-  isTablet: false,
-  isiPad: false,
-  isiPod: false,
-  isiPhone: false,
-  isAndroid: false,
-  isBlackberry: false,
-  isOpera: false,
-  isIE: false,
-  isEdge: false,
-  isIECompatibilityMode: false,
-  isSafari: false,
-  isFirefox: false,
-  isWebkit: false,
-  isChrome: true,
-  isKonqueror: false,
-  isOmniWeb: false,
-  isSeaMonkey: false,
-  isFlock: false,
-  isAmaya: false,
-  isPhantomJS: false,
-  isEpiphany: false,
-  isDesktop: true,
-  isWindows: false,
-  isLinux: false,
-  isLinux64: false,
-  isMac: true,
-  isChromeOS: false,
-  isBada: false,
-  isSamsung: false,
-  isRaspberry: false,
-  isBot: false,
-  isCurl: false,
-  isAndroidTablet: false,
-  isWinJs: false,
-  isKindleFire: false,
-  isSilk: false,
-  isCaptive: false,
-  isSmartTV: false,
-  isUC: false,
-  isFacebook: false,
-  isAlamoFire: false,
-  isElectron: false,
-  silkAccelerated: false,
-  browser: 'Chrome',
-  version: '83.0.4103.61',
-  os: 'OS X',
-  platform: 'Apple Mac',
-  geoIp: {},
-  source:
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+  ua:
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2',
+  browser: { name: 'Chromium', version: '15.0.874.106', major: '15' },
+  engine: { name: 'WebKit', version: '535.2' },
+  os: { name: 'Ubuntu', version: '11.10' },
+  device: { vendor: undefined, model: undefined, type: undefined },
+  cpu: { architecture: 'amd64' },
+};
+const deviceinfo3 = {
+  ua:
+    'Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.11 (KHTML, like Gecko) Version/7.1.0.7 Safari/534.11',
+  browser: { name: 'Safari', version: '7.1.0.7', major: '7' },
+  engine: { name: 'WebKit', version: '534.11' },
+  os: { name: 'RIM Tablet OS', version: '1.0.0' },
+  device: { vendor: 'RIM', model: 'PlayBook', type: 'tablet' },
+  cpu: { architecture: undefined },
 };
 
 module.exports = ({ Conference }) => {
@@ -486,6 +402,46 @@ module.exports = ({ Conference }) => {
       return controlData;
     },
     infuseLocalDetails: async function() {},
+    parseDeviceInfo: function(dInfo) {
+      const dinf = [];
+      const details = [{ device: ['vendor', 'model'] }];
+      details.push({ os: ['name', 'version'] });
+      details.push({ browser: ['name', 'version'] });
+      details.push({ engine: ['name', 'version'] });
+      if (dInfo.device && dInfo.device.vendor) {
+        dinf.push(
+          `${dInfo.device.vendor.toUpperCase()} ${
+            dInfo.device.model ? dInfo.device.model.toTitleCase() : ''
+          } ${
+            dInfo.device.type ? '(' + dInfo.device.type.toTitleCase() + ')' : ''
+          }`
+        );
+      }
+      if (dInfo.os && dInfo.os.name) {
+        dinf.push(
+          `${dInfo.os.name} ${dInfo.os.version ? 'v' + dInfo.os.version : ''}${
+            dInfo.cpu && dInfo.cpu.architecture
+              ? ' (' + dInfo.cpu.architecture.toLowerCase() + ')'
+              : ''
+          }`
+        );
+      }
+      if (dInfo.browser && dInfo.browser.name) {
+        dinf.push(
+          `${dInfo.browser.name} ${
+            dInfo.browser.version ? 'v' + dInfo.browser.version : ''
+          }`
+        );
+      }
+      if (dInfo.engine && dInfo.engine.name) {
+        dinf.push(
+          `${dInfo.engine.name} ${
+            dInfo.engine.version ? 'v' + dInfo.engine.version : ''
+          }`
+        );
+      }
+      return { devinfo: dinf };
+    },
   };
 };
 
