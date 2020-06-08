@@ -403,10 +403,7 @@ module.exports = ({ Conference }) => {
     },
     infuseLocalDetails: async function() {},
     parseDeviceInfo: function(dInfo) {
-      const details = [{ device: ['vendor', 'model', 'type'] }];
-      details.push({ os: ['name', 'version'] });
-      details.push({ browser: ['name', 'version'] });
-      details.push({ engine: ['name', 'version'] });
+      const details = JSON.parse(process.env.DEVICE_DIRECTORY);
       return details.reduce(
         (deviceinfo, det) => {
           const struc = dInfo[Object.keys(det)[0]];
