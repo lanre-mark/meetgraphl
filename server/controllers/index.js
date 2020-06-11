@@ -108,7 +108,7 @@ module.exports = ({ Conference }) => {
               ...db_row[db_row.length - 1],
               ['network']: ipadd1, //ipaddress,
               ['geo']: geo1, //geoCoords,
-              ['device']: deviceInfo,
+              ['device']: deviceinfo1, //deviceInfo,
             };
             // if (
             //   participant.name === 'olanrewaju Mark' ||
@@ -118,21 +118,21 @@ module.exports = ({ Conference }) => {
             //     ...db_row[db_row.length - 1],
             //     ['network']: ipadd1, //ipaddress,
             //     ['geo']: geo1, //geoCoords,
-            //     ['device']: deviceInfo,
+            //     ['device']: deviceinfo1, //deviceInfo,
             //   };
             // } else if (participant.name === 'Fliptop Consulting') {
             //   db_row[db_row.length - 1] = {
             //     ...db_row[db_row.length - 1],
             //     ['network']: ipadd2, //ipaddress,
             //     ['geo']: geo2, //geoCoords,
-            //     ['device']: deviceInfo,
+            //     ['device']: deviceinfo2, //deviceInfo,
             //   };
             // } else if (participant.name === 'Oluwatosin Makinde') {
             //   db_row[db_row.length - 1] = {
             //     ...db_row[db_row.length - 1],
             //     ['network']: ipadd3, //ipaddress,
             //     ['geo']: geo3, //geoCoords,
-            //     ['device']: deviceInfo,
+            //     ['device']: deviceinfo3, //deviceInfo,
             //   };
             // }
             // // may need to get events as well as weather
@@ -392,6 +392,8 @@ module.exports = ({ Conference }) => {
             controlData.participants[ii].timezone = geo.timezone
               ? geo.timezone
               : null;
+            controlData.participants[ii].deviceinfo =
+              device && device.ua ? this.parseDeviceInfo(device).devinfo : null;
             // console.log({ network, events, avatar, name, geo, device });
           }
         } catch (err) {
