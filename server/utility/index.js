@@ -72,7 +72,7 @@ const ipaddformat = (resp, type = 1) => {
     regionName: type == 1 ? resp.regionName : resp.region_name,
     cityName: resp.city,
     zipCode: type == 1 ? resp.zip : resp.zip_code,
-    latitide: type == 1 ? resp.lat : resp.latitude,
+    latitude: type == 1 ? resp.lat : resp.latitude,
     longitude: type == 1 ? resp.lon : resp.longitude,
     timezone: type == 1 ? resp.timezone : resp.time_zone,
     place: placeformat(
