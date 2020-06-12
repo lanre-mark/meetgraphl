@@ -43,3 +43,48 @@ String.prototype.toTitleCase = function() {
     })
     .join('');
 };
+
+/**
+ * Returns a date <minutes> after the given <date>.
+ * @param date
+ * @param minutes
+ */
+const addMInutes = ({ date, minutes = 0 }) => {
+  const newDate = new Date(date.valueOf());
+  newDate.setTime(date.getTime() + minutes * 1000);
+  return newDate;
+};
+
+const NextKeyInSequence = (currentKey) => {
+  const keys = JSON.parse(process.env.WEATHER_API_KEY_OWM);
+  return !currentKey
+    ? keys[0]
+    : (function(ky) {
+        let ndx = keys.findIndex((k) => k === ky);
+        return ndx < 0 || ndx + 1 > keys.length - 1 ? keys[0] : keys[ndx + 1];
+      })(currentKey);
+};
+
+const generateApiKeysData = async (modelComponent) => {
+  JSON.parse(process.env.WEATHER_API_KEY_OWM)
+    .map((k) => {
+      return [k, Math.round(Math.random() * 60 + 1, 0)];
+    })
+    .forEach(async (keyset, ndx) => {
+      for (let ii = 1; ii <= keyset[1]; ii++) {
+        await new modelComponent({
+          apiKey: keyset[0],
+        }).save();
+      }
+    });
+};
+
+const requireNextKey = async (modelComponent) => {
+  return await modelComponent.nextAPIKey();
+};
+
+module.exports = {
+  NextKeyInSequence,
+  generateApiKeysData,
+  requireNextKey,
+};
