@@ -6,6 +6,14 @@ const router = require('express').Router(),
 const models = require('../models');
 const controller = require('../controllers')(models);
 
+const miscUtilities = require('../utility/misc');
+// await miscUtilities.generateApiKeysData(models.WeatherKeyController);
+// console.log('Completed faked data');
+// const nxtApiKey = await miscUtilities.requireNextKey(
+//   models.WeatherKeyController
+// );
+// console.log('Next data :: ', nxtApiKey);
+
 const meet1 = [
   {
     instance: 'kId',
@@ -160,6 +168,11 @@ router.get('/hey', async (req, res, next) => {
   // console.log(controller);
 
   // const ths = await controller.addConferenceInfo(meet4);
+
+  const nxtApiKey = await miscUtilities.requireNextKey(
+    models.WeatherKeyController
+  );
+  console.log('Next data :: ', nxtApiKey);
 
   // const ipadd1 = '105.112.55.239';
 
