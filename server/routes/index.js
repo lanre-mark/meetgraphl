@@ -169,11 +169,6 @@ router.get('/hey', async (req, res, next) => {
 
   // const ths = await controller.addConferenceInfo(meet4);
 
-  // const nxtApiKey = await miscUtilities.requireNextKey(
-  //   models.WeatherKeyController
-  // );
-  // console.log('Next data :: ', nxtApiKey);
-
   /* 
   cityName: 'Lagos',
   latitide: 6.4474,
@@ -192,27 +187,8 @@ router.get('/hey', async (req, res, next) => {
   longitude: -2.4149,
   */
 
-  // check all APIKEYs used
-  // const nxtApiKey = await miscUtilities.requireNextKey(models.WeatherKeyController);
-  // console.log('Next data :: ', nxtApiKey);
-
-  // const weatherDetails = await miscUtilities.fetchWeatherDetails(
-  //   await miscUtilities.requireNextKey(models.WeatherKeyController),
-  //   34.0531,
-  //   -118.242
-  // );
   // console.log('weatherDetails :: ', weatherDetails);
 
-  // // GeoData Searches
-  // const weatherTestCheck = miscUtilities.weatherTestVerificationCallGeoCoordsForAPI();
-  // const dataIndex = Math.round(Math.random() * weatherTestCheck.length - 1);
-  // console.log(weatherTestCheck.length);
-  // console.log(dataIndex);
-  // console.log(weatherTestCheck[dataIndex]);
-  // const weatherTestGeoCoordsData = await miscUtilities.queryCheck(models, [
-  //   weatherTestCheck[dataIndex].longitude,
-  //   weatherTestCheck[dataIndex].latitude,
-  // ]);
   //{ latitude: 6.444016135322083, longitude: 3.486587581246014 }
   const checkGeoinWeather = await models.WeatherRepo.retrieveWeatherDetails(
     models.WeatherKeyController,
@@ -220,20 +196,6 @@ router.get('/hey', async (req, res, next) => {
     3.486587581246014 //3.3477178950871185
   );
   console.log(checkGeoinWeather);
-  // // GeoData Loader
-
-  // const weatherTestGeoCoordsData = miscUtilities.weatherTestDataGeoCoordsForAPI();
-  // for (let ii = 0; ii < weatherTestGeoCoordsData.length; ii++) {
-  //   const weatherDetails = await miscUtilities.fetchWeatherDetails(
-  //     models,
-  //     await miscUtilities.requireNextKey(models.WeatherKeyController),
-  //     weatherTestGeoCoordsData[ii].latitude,
-  //     weatherTestGeoCoordsData[ii].longitude
-  //   );
-  //   await miscUtilities.asyncDelay(0.05);
-  // }
-
-  // console.log(weatherTestGeoCoordsData.length);
 
   // const ipadd1 = '105.112.55.239';
 
