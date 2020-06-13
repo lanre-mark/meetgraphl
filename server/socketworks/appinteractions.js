@@ -1,4 +1,5 @@
 const requestIp = require('request-ip');
+const userparser = require('ua-parser-js');
 const { communicationType } = require('./types');
 const { resolveip } = require('../utility');
 const debug = require('debug')(

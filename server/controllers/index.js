@@ -1,5 +1,5 @@
 const { getDistanceFromLatLonInKm } = require('../utility/geometry');
-const stringPrototypes = require('../utility/misc');
+const miscUtilities = require('../utility/misc');
 
 // IP Address
 const ipadd1 = '105.112.55.239';
@@ -78,7 +78,7 @@ const deviceinfo3 = {
   cpu: { architecture: undefined },
 };
 
-module.exports = ({ Conference }) => {
+module.exports = ({ Conference, WeatherKeyController, WeatherRepo }) => {
   // need to add other models weatherkeycontroller, weatherrepo, events...
   return {
     addConferenceInfo: async function(
@@ -397,12 +397,13 @@ module.exports = ({ Conference }) => {
               device && device.ua ? this.parseDeviceInfo(device).devinfo : null;
             // console.log({ network, events, avatar, name, geo, device });
 
-            // const checkGeoinWeather = await models.WeatherRepo.retrieveWeatherDetails(
-            //   models.WeatherKeyController,
-            //   6.444016135322083, //6.4331444433491285,
-            //   3.486587581246014 //3.3477178950871185
-            // );
-            // console.log(checkGeoinWeather);
+            const checkGeoinWeather = await WeatherRepo.retrieveWeatherDetails(
+              WeatherKeyController,
+              geoLat,
+              geoLon
+            );
+            controlData.participants[ii].weatherinfo = checkGeoinWeather;
+            console.log(checkGeoinWeather);
           }
         } catch (err) {
           console.error(err);
