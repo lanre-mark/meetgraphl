@@ -14,7 +14,7 @@ const geo1 = {
   regionName: 'Lagos',
   cityName: 'Lagos',
   zipCode: '',
-  latitide: 6.4474,
+  latitude: 6.4474,
   longitude: 3.3903,
   timezone: 'Africa/Lagos',
   place: 'Lagos, Nigeria',
@@ -28,7 +28,7 @@ const geo2 = {
   regionName: 'California',
   cityName: 'Los Angeles',
   zipCode: '90012',
-  latitide: 34.0531,
+  latitude: 34.0531,
   longitude: -118.242,
   timezone: 'America/Los_Angeles',
   place: 'Los Angeles, California, United States',
@@ -43,7 +43,7 @@ const geo3 = {
   regionName: 'England',
   cityName: 'Newent',
   zipCode: 'GL18',
-  latitide: 51.9417,
+  latitude: 51.9417,
   longitude: -2.4149,
   timezone: 'Europe/London',
   place: 'Newent, England, United Kingdom',
@@ -79,6 +79,7 @@ const deviceinfo3 = {
 };
 
 module.exports = ({ Conference }) => {
+  // need to add other models weatherkeycontroller, weatherrepo, events...
   return {
     addConferenceInfo: async function(
       participantsObject,
@@ -342,7 +343,7 @@ module.exports = ({ Conference }) => {
         Conference,
         participants,
         operationData.operate['conf-meet-id'],
-        geoCoords.latitide,
+        geoCoords.latitude,
         geoCoords.longitude,
         operationData.resp
       );
@@ -384,7 +385,7 @@ module.exports = ({ Conference }) => {
                 ? getDistanceFromLatLonInKm(
                     geoLat,
                     geoLon,
-                    geo.latitide,
+                    geo.latitude,
                     geo.longitude
                   )
                 : null;
@@ -395,6 +396,13 @@ module.exports = ({ Conference }) => {
             controlData.participants[ii].deviceinfo =
               device && device.ua ? this.parseDeviceInfo(device).devinfo : null;
             // console.log({ network, events, avatar, name, geo, device });
+
+            // const checkGeoinWeather = await models.WeatherRepo.retrieveWeatherDetails(
+            //   models.WeatherKeyController,
+            //   6.444016135322083, //6.4331444433491285,
+            //   3.486587581246014 //3.3477178950871185
+            // );
+            // console.log(checkGeoinWeather);
           }
         } catch (err) {
           console.error(err);
