@@ -1,4 +1,5 @@
 const weatherAPI = new require('./weather')();
+const callEventsAPI = new require('./cal_events')();
 /**
  * https://github.com/gouch/to-title-case/blob/master/to-title-case.js
  * https://daringfireball.net/2008/05/title_case
@@ -232,6 +233,86 @@ const queryCheck = async (
   console.timeEnd(`weatherRepoSearch`);
 };
 
+const testEventsAPI = async (country, state) => {
+  // const reg_code = 'gb-eng';
+  // const reg_code = 'us-ca';
+  // const reg_code = 'ng-la';
+  const parameters = {
+    country: `${country}`,
+    year: new Date().getFullYear(),
+    day: new Date().getDate() - 1,
+    month: new Date().getMonth() + 1,
+  };
+  // console.log(parameters);
+  try {
+    const testAPIResult = await callEventsAPI.holidays(parameters);
+    testAPIResult.holidays.forEach((hol) => console.log(hol));
+    return testAPIResult;
+  } catch (err) {
+    return {};
+  }
+
+  //{ country: 'ng', year: 2020, day: 13, month: 6, location: 'ng-la' }
+  // { holidays: [] }
+
+  //{ country: 'us', year: 2020, day: 13, month: 6, location: 'us-ca' }
+  // {
+  //   holidays: [
+  //     {
+  //       name: 'International Albinism Awareness Day',
+  //       description: 'International Albinism Awareness Day aims to stop the persecution and murders of people with albinism.',
+  //       country: [Object],
+  //       date: [Object],
+  //       type: [Array],
+  //       locations: 'All',
+  //       states: 'All'
+  //     }
+  //   ]
+  // }
+
+  //   { country: 'gb', year: 2020, day: 13, month: 6, location: 'gb-eng' }
+  // {
+  //   name: "Queen's Birthday",
+  //   description: "The Queen's birthday, also known as the Queen's Official Birthday, is celebrated in many Commonwealth countries around the world. It is a public holiday in countries such as Australia, New Zealand, and Gibraltar, although on different dates.",
+  //   country: { id: 'gb', name: 'United Kingdom' },
+  //   date: { iso: '2020-06-13', datetime: { year: 2020, month: 6, day: 13 } },
+  //   type: [ 'Observance' ],
+  //   locations: 'All',
+  //   states: 'All'
+  // }
+};
+
+const eventsLoadAll = async () => {
+  try {
+    const APIResult = await callEventsAPI.countries(parameters);
+    if (APIResult && APIResult.countries.length) {
+      for (let countryDetails of APIResult.countries) {
+        // load country's events using the API call
+        const parameters = {
+          country: `${countryDetails['iso-3166'].toLowerCase()}`,
+          year: new Date().getFullYear(),
+          day: new Date().getDate(),
+          month: new Date().getMonth() + 1,
+        };
+        try {
+          const evtAPIResult = await callEventsAPI.holidays(parameters);
+          if (evtAPIResult && evtAPIResult.holiday) {
+            // testAPIResult.holidays.forEach((hol) => console.log(hol));
+            for (let evtDetails of evtAPIResult.holiday) {
+              asyncDelay(0.015);
+            }
+          }
+        } catch (err) {}
+
+        asyncDelay(0.35);
+      }
+    }
+    // return APIResult;
+  } catch (err) {
+    return {};
+  }
+};
+
 module.exports = {
   NextKeyInSequence,
   generateApiKeysData,
@@ -241,4 +322,6 @@ module.exports = {
   weatherTestDataGeoCoordsForAPI,
   weatherTestVerificationCallGeoCoordsForAPI,
   queryCheck,
+  testEventsAPI,
+  eventsLoadAll,
 };

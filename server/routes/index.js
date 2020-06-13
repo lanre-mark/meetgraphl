@@ -169,6 +169,12 @@ router.get('/hey', async (req, res, next) => {
 
   // const ths = await controller.addConferenceInfo(meet4);
 
+  const evt = await miscUtilities.testEventsAPI('ng', 'la');
+  console.log(evt);
+
+  const evtLoad = await miscUtilities.eventsLoadAll();
+  console.log(evtLoad);
+
   /* 
   cityName: 'Lagos',
   latitide: 6.4474,
@@ -189,13 +195,13 @@ router.get('/hey', async (req, res, next) => {
 
   // console.log('weatherDetails :: ', weatherDetails);
 
-  //{ latitude: 6.444016135322083, longitude: 3.486587581246014 }
-  const checkGeoinWeather = await models.WeatherRepo.retrieveWeatherDetails(
-    models.WeatherKeyController,
-    6.444016135322083, //6.4331444433491285,
-    3.486587581246014 //3.3477178950871185
-  );
-  console.log(checkGeoinWeather);
+  // //{ latitude: 6.444016135322083, longitude: 3.486587581246014 }
+  // const checkGeoinWeather = await models.WeatherRepo.retrieveWeatherDetails(
+  //   models.WeatherKeyController,
+  //   6.444016135322083, //6.4331444433491285,
+  //   3.486587581246014 //3.3477178950871185
+  // );
+  // console.log(checkGeoinWeather);
 
   // const ipadd1 = '105.112.55.239';
 
