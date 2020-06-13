@@ -29,7 +29,7 @@ weatherKeyControllerSchema.statics.nextAPIKey = async function() {
   if (lstkey.length) {
     // be sure that the number of the last one and the new one to be returned is within limit of the number of calls per API key within the expected limit
     // count the number of records
-    if (lstkey[0].usage + 1 < process.env.WEATHER_API_SIZE_RANGE - 5) {
+    if (lstkey[0].usage + 1 <= process.env.WEATHER_API_SIZE_RANGE - 5) {
       // console.log('Use the current max :: ', lstkey[0]._id);
       return lstkey[0]._id;
     } else {
@@ -41,6 +41,12 @@ weatherKeyControllerSchema.statics.nextAPIKey = async function() {
     // console.log('Use the first one');
     return miscUtilities.NextKeyInSequence();
   }
+};
+
+weatherKeyControllerSchema.statics.logAPIKey = async function(apiKey) {
+  await new WeatherKeyController({
+    apiKey,
+  }).save();
 };
 
 const WeatherKeyController = mongoose.model(
