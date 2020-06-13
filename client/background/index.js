@@ -15,6 +15,7 @@ const socket = io('https://meetgrapheek.glitch.me');
 initiateBrowserCall();
 
 socket.on('connect', async (client) => {
+  console.log('Connected to the Socket Now');
   mutateConnState(true);
 });
 
