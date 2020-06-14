@@ -366,6 +366,15 @@ const eventsLoadAll = async (modelComponent, year, month, country) => {
 };
 
 const holidayEvents = async (modelComponent, year, month, country, region) => {
+  // // HOW TO CALL
+  // const evtHolidays = await miscUtilities.holidayEvents(
+  //   models.LocationEvent,
+  //   new Date().getFullYear(),
+  //   new Date().getMonth() + 1,
+  //   'au',
+  //   'nf'
+  // );
+  // console.log(evtHolidays);
   const rsp = await modelComponent.yourHolidayEvents(
     country,
     region,

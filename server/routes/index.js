@@ -173,13 +173,14 @@ router.get('/hey', async (req, res, next) => {
   // console.log(evt);
   //modelComponent, month, country
 
-  // const evtLoad = await miscUtilities.eventsLoadAll(
+  // const evtHolidays = await miscUtilities.holidayEvents(
   //   models.LocationEvent,
-  //   new Date().getMonth() + 1,
   //   new Date().getFullYear(),
-  //   'au'
+  //   new Date().getMonth() + 1,
+  //   'au',
+  //   'nf'
   // );
-  // console.log(evtLoad);
+  // console.log(evtHolidays);
 
   /* 
   cityName: 'Lagos',
