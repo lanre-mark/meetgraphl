@@ -29,12 +29,41 @@ const LocationEventSchema = new mongoose.Schema(
   }
 );
 
-LocationEventSchema.statics.espoungeEvents = async (country, month, year) => {
+LocationEventSchema.statics.yourHolidayEvents = async (
+  country,
+  region,
+  year,
+  month
+) => {
+  try {
+    let locationevent = await LocationEvent.find(
+      {
+        country: country,
+        $and: [
+          { $expr: { $eq: [{ $month: '$date' }, month] } },
+          { $expr: { $eq: [{ $year: '$date' }, year] } },
+        ],
+        $or: [
+          { $expr: { $eq: ['$region', 'All'] } },
+          { $expr: { $eq: ['$region', region] } },
+        ],
+      },
+      { _id: 0, payload: 1 }
+    );
+    return locationevent.map((h) => h.payload);
+  } catch (err) {
+    return [];
+  }
+};
+
+LocationEventSchema.statics.espoungeEvents = async (country, year, month) => {
   // const locationevent =
   await LocationEvent.deleteMany({
     country: country,
-    $expr: { $eq: [{ $month: '$date' }, month] },
-    $expr: { $eq: [{ $year: '$date' }, year] },
+    $and: [
+      { $expr: { $eq: [{ $month: '$date' }, month] } },
+      { $expr: { $eq: [{ $year: '$date' }, year] } },
+    ],
   });
 };
 
