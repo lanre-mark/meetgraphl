@@ -289,14 +289,14 @@ const testEventsAPI = async (country, state) => {
  * @param {*} year year of month for loading all events
  * @param {*} country optional country for which to load all events but this is no applicable here
  */
-const eventsLoadAll = async (modelComponent, month, year, country) => {
+const eventsLoadAll = async (modelComponent, year, month, country) => {
   let numOfCountries = 0,
     numOfRegions = 0;
   // // HOW TO CALL
   // const evtLoad = await miscUtilities.eventsLoadAll(
   //   models.LocationEvent,
-  //   new Date().getMonth() + 1,
   //   new Date().getFullYear(),
+  //   new Date().getMonth() + 1,
   //   'au'
   // );
   try {
@@ -365,7 +365,15 @@ const eventsLoadAll = async (modelComponent, month, year, country) => {
   return {};
 };
 
-const holidayEvents = async (country, year, month) => {};
+const holidayEvents = async (modelComponent, year, month, country, region) => {
+  const rsp = await modelComponent.yourHolidayEvents(
+    country,
+    region,
+    year,
+    month
+  );
+  return rsp;
+};
 
 module.exports = {
   NextKeyInSequence,
