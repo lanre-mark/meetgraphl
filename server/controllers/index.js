@@ -408,7 +408,18 @@ module.exports = ({
               geoLon
             );
             controlData.participants[ii].weatherinfo = checkGeoinWeather;
-            console.log(checkGeoinWeather);
+            console.log("Participant's Weather :: ", checkGeoinWeather);
+
+            const evtHolidays = await miscUtilities.holidayEvents(
+              LocationEvent,
+              new Date().getFullYear(),
+              new Date().getMonth() + 1,
+              geo.countryCode.toLowerCase(),
+              geo.regionCode.toLowerCase()
+            );
+
+            controlData.participants[ii].holidayinfo = evtHolidays;
+            console.log("Participant's Holiday Event :: ", evtHolidays);
           }
         } catch (err) {
           console.error(err);
