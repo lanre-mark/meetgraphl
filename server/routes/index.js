@@ -169,11 +169,17 @@ router.get('/hey', async (req, res, next) => {
 
   // const ths = await controller.addConferenceInfo(meet4);
 
-  const evt = await miscUtilities.testEventsAPI('ng', 'la');
-  console.log(evt);
+  // const evt = await miscUtilities.testEventsAPI('ng', 'la');
+  // console.log(evt);
+  //modelComponent, month, country
 
-  const evtLoad = await miscUtilities.eventsLoadAll();
-  console.log(evtLoad);
+  // const evtLoad = await miscUtilities.eventsLoadAll(
+  //   models.LocationEvent,
+  //   new Date().getMonth() + 1,
+  //   new Date().getFullYear(),
+  //   'au'
+  // );
+  // console.log(evtLoad);
 
   /* 
   cityName: 'Lagos',

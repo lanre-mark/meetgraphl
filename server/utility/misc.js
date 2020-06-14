@@ -282,36 +282,90 @@ const testEventsAPI = async (country, state) => {
   // }
 };
 
-const eventsLoadAll = async () => {
+/**
+ *
+ * @param {*} modelComponent the model to be used for operation LocationEvent
+ * @param {*} month month for loading all events
+ * @param {*} year year of month for loading all events
+ * @param {*} country optional country for which to load all events but this is no applicable here
+ */
+const eventsLoadAll = async (modelComponent, month, year, country) => {
+  let numOfCountries = 0,
+    numOfRegions = 0;
+  // // HOW TO CALL
+  // const evtLoad = await miscUtilities.eventsLoadAll(
+  //   models.LocationEvent,
+  //   new Date().getMonth() + 1,
+  //   new Date().getFullYear(),
+  //   'au'
+  // );
   try {
-    const APIResult = await callEventsAPI.countries(parameters);
+    const APIResult = await callEventsAPI.countries(country);
     if (APIResult && APIResult.countries.length) {
       for (let countryDetails of APIResult.countries) {
-        // load country's events using the API call
         const parameters = {
           country: `${countryDetails['iso-3166'].toLowerCase()}`,
-          year: new Date().getFullYear(),
-          day: new Date().getDate(),
-          month: new Date().getMonth() + 1,
+          year: year,
+          month: month,
         };
         try {
           const evtAPIResult = await callEventsAPI.holidays(parameters);
-          if (evtAPIResult && evtAPIResult.holiday) {
-            // testAPIResult.holidays.forEach((hol) => console.log(hol));
-            for (let evtDetails of evtAPIResult.holiday) {
+          if (evtAPIResult && evtAPIResult.holidays.length) {
+            // first remove from the db collection
+            await modelComponent.espoungeEvents(
+              `${countryDetails['iso-3166'].toLowerCase()}`,
+              year,
+              month
+            );
+
+            for (let evtDetails of evtAPIResult.holidays) {
+              const { name, description, type } = evtDetails;
+              const locationEvent = {
+                country: countryDetails['iso-3166'].toLowerCase(),
+                date: evtDetails.date.iso.split('T')[0],
+                payload: {
+                  name,
+                  description,
+                  type,
+                },
+              };
+              if (typeof evtDetails.states === 'string') {
+                locationEvent.region = evtDetails.states;
+                const rsp = await modelComponent.logEvent(locationEvent);
+              } else if (typeof evtDetails.states === 'object') {
+                // just drop using all as states
+                for (let eachRegion of evtDetails.states) {
+                  // use the state's abbrev if it exist and its not null
+                  // if null, use iso
+                  // but check if the iso does not contains '-', if it does
+                  // remove everything before the '-' inclusive and use the rest as region
+                  locationEvent.region = eachRegion.abbrev
+                    ? eachRegion.abbrev.toLowerCase()
+                    : eachRegion.iso.indexOf('-') >= 0
+                    ? eachRegion.iso.split('-')[1].toLowerCase()
+                    : eachRegion.iso.toLowerCase();
+                  const rsp = await modelComponent.logEvent(locationEvent);
+                }
+              }
               asyncDelay(0.015);
             }
           }
-        } catch (err) {}
-
+        } catch (err) {
+          console.log('Country Holiday Error :: ', err);
+        }
+        numOfCountries++;
+        // console.log('numOfCountries :: ', numOfCountries);
         asyncDelay(0.35);
       }
+      return { msg: "completed all countries's holiday events" };
     }
-    // return APIResult;
   } catch (err) {
-    return {};
+    console.log(err);
   }
+  return {};
 };
+
+const holidayEvents = async (country, year, month) => {};
 
 module.exports = {
   NextKeyInSequence,
@@ -324,4 +378,5 @@ module.exports = {
   queryCheck,
   testEventsAPI,
   eventsLoadAll,
+  holidayEvents,
 };
