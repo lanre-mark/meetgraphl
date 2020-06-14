@@ -70,11 +70,14 @@ CalEvents.prototype.holidays = async function(parameters) {
   return await invokeAPI(url);
 };
 
-CalEvents.prototype.countries = async function(parameters) {
-  let querystring = '?api_key=' + this.key;
-
-  const url = `${this.apiEndpoint}/holidays${querystring}`;
-
+/**
+ *  add country to argumnents so that this can be used for all countries or a single country
+ */
+CalEvents.prototype.countries = async function(country) {
+  let querystring = `?api_key=${this.key}${
+    country ? '&country=' + country : null
+  }`;
+  const url = `${this.apiEndpoint}/countries${querystring}`;
   return await invokeAPI(url);
 };
 
