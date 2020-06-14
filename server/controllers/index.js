@@ -78,7 +78,12 @@ const deviceinfo3 = {
   cpu: { architecture: undefined },
 };
 
-module.exports = ({ Conference, WeatherKeyController, WeatherRepo }) => {
+module.exports = ({
+  Conference,
+  WeatherKeyController,
+  WeatherRepo,
+  LocationEvent,
+}) => {
   // need to add other models weatherkeycontroller, weatherrepo, events...
   return {
     addConferenceInfo: async function(
