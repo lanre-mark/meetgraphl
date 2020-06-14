@@ -7,19 +7,16 @@ const LocationEventSchema = new mongoose.Schema(
     country: {
       type: String,
       maxLength: 6,
-      reuqired: true,
+      required: true,
     },
     region: {
       type: String,
       maxLength: 6,
-      reuqired: true,
+      required: true,
     },
     date: {
-      type: mongoose.Schema.Types.Date,
-      reuqired: true,
-      set: function(v) {
-        return new Date(v.getFullYear(), v.getMonth(), v.getDate());
-      },
+      type: Date,
+      required: true,
     },
     payload: {
       type: mongoose.Schema.Types.Mixed,
@@ -32,9 +29,44 @@ const LocationEventSchema = new mongoose.Schema(
   }
 );
 
+LocationEventSchema.statics.espoungeEvents = async (country, month, year) => {
+  // const locationevent =
+  await LocationEvent.deleteMany({
+    country: country,
+    $expr: { $eq: [{ $month: '$date' }, month] },
+    $expr: { $eq: [{ $year: '$date' }, year] },
+  });
+};
+
+LocationEventSchema.statics.logEvent = async (obj) => {
+  const { country, region, date, payload } = obj;
+  const locationevent = await LocationEvent.find({ country, region, date });
+  if (locationevent.length) {
+    // need to deleted actually in a global statics method
+    await LocationEvent.updateOne(
+      {
+        country,
+        region,
+        date,
+        'payload.name': payload.name,
+      },
+      { $set: { payload } }
+    );
+    return locationevent[0]._id;
+  } else {
+    const newEvtData = await new LocationEvent({
+      country,
+      region,
+      date,
+      payload,
+    }).save();
+    return newEvtData ? newEvtData._id : null;
+  }
+};
+
 LocationEventSchema.index(
   { createdAt: 1 },
-  { expireAfterSeconds: 60 * process.env.EVENTS_UPDATE_TIMELINE } // lifetime of process.env.EVENTS_UPDATE_TIMELINE minute(s)
+  { expireAfterSeconds: 60 * 60 * 24 * process.env.EVENTS_UPDATE_TIMELINE } // lifetime of process.env.EVENTS_UPDATE_TIMELINE days(s)
 );
 
 const LocationEvent = mongoose.model('LocationEvent', LocationEventSchema);
