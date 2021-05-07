@@ -116,7 +116,7 @@
     "socket.io-client": "^2.3.0",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.1.0",
-    "ua-parser-js": "^0.7.21",
+    "ua-parser-js": "^0.7.24",
     "url-loader": "1.1.1",
     "web-ext": "^2.9.3",
     "webextension-polyfill": "^0.3.1",
